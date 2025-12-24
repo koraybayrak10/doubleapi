@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <title>Orders API</title>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>Orders API</h1>
+          <div class="small">Stateless • Catalog servisine HTTP ile bağlanır</div>
+        </div>
+      </div>
+      <div class="badge mono">port: 8000</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-h">
+          <div class="mono">Endpoints</div>
+          <div class="row">
+            <a class="btn primary" href="/docs">Swagger /docs</a>
+            <a class="btn" href="http://localhost:8001" target="_blank">Catalog UI</a>
+          </div>
+        </div>
+        <div class="card-b">
+          <div class="kv">
+            <div class="k">GET</div><div class="v">/quote/{product_id}?qty=2</div>
+            <div class="k">GET</div><div class="v">/health</div>
+          </div>
+          <hr/>
+          <div class="small mono">CATALOG_URL:</div>
+          <pre class="mono" id="cat"></pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">
+          <div class="mono">Demo</div>
+          <button class="btn ok" onclick="quote()">Fiyat hesapla</button>
+        </div>
+        <div class="card-b">
+          <label>product_id</label>
+          <input id="pid" value="p-100" />
+          <div class="row">
+            <div>
+              <label>qty</label>
+              <input id="qty" value="2" />
+            </div>
+          </div>
+          <hr/>
+          <pre id="out" class="mono">{}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const CATALOG_URL = "{{ catalog_url }}";
+document.getElementById("cat").textContent = CATALOG_URL;
+
+async function quote(){
+  const pid = document.getElementById("pid").value.trim();
+  const qty = document.getElementById("qty").value.trim();
+  const res = await fetch(`/quote/${encodeURIComponent(pid)}?qty=${encodeURIComponent(qty)}`);
+  const data = await res.json();
+  document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+}
+</script>
+</body>
+</html>
