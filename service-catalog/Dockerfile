@@ -2,13 +2,11 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY service-catalog/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app ./app
-COPY app/templates ./templates
-
-# shared ui (from repo root shared/ui) will be copied by build context in compose
+COPY service-catalog/app ./app
+COPY service-catalog/app/templates ./templates
 COPY shared/ui ./shared/ui
 
 EXPOSE 8001
