@@ -1,0 +1,20 @@
+services:
+  service-catalog:
+    build:
+      context: .
+      dockerfile: service-catalog/Dockerfile
+    container_name: service-catalog
+    ports:
+      - "8001:8001"
+
+  service-orders:
+    build:
+      context: .
+      dockerfile: service-orders/Dockerfile
+    container_name: service-orders
+    environment:
+      - CATALOG_URL=http://service-catalog:8001
+    depends_on:
+      - service-catalog
+    ports:
+      - "8000:8000"
