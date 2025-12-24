@@ -2,11 +2,12 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+# ⬇️ DİKKAT: path verdik
+COPY service-orders/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app ./app
-COPY app/templates ./templates
+COPY service-orders/app ./app
+COPY service-orders/app/templates ./templates
 COPY shared/ui ./shared/ui
 
 EXPOSE 8000
