@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <title>Catalog API</title>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>Catalog API</h1>
+          <div class="small">Stateless microservice • UI sadece gösterim için</div>
+        </div>
+      </div>
+      <div class="badge mono">port: 8001</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-h">
+          <div class="mono">Endpoints</div>
+          <a class="btn primary" href="/docs">Swagger /docs</a>
+        </div>
+        <div class="card-b">
+          <div class="kv">
+            <div class="k">GET</div><div class="v">/products</div>
+            <div class="k">GET</div><div class="v">/products/{product_id}</div>
+            <div class="k">GET</div><div class="v">/health</div>
+          </div>
+          <hr/>
+          <div class="small">Örnek:</div>
+          <pre class="mono">curl http://localhost:8001/products</pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">
+          <div class="mono">Demo</div>
+          <button class="btn ok" onclick="load()">Ürünleri getir</button>
+        </div>
+        <div class="card-b">
+          <pre id="out" class="mono">{}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+async function load(){
+  const res = await fetch('/products');
+  const data = await res.json();
+  document.getElementById('out').textContent = JSON.stringify(data, null, 2);
+}
+</script>
+</body>
+</html>
